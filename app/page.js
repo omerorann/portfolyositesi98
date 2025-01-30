@@ -1,101 +1,268 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import DesktopIcon from "./components/DesktopIcon";
+import Window from "./components/Window";
+import TaskBar from "./components/Taskbar";
+import HeroSection from "./components/Hero";
+import ProjectsPreview from "./components/Projects";
+import Skills from "./components/Skills";
+import Contact from "./components/Contact";
+import Browser from "./components/Browser";
+import ContextMenu from "./components/ContextMenu";
+import LoadingScreen from "./components/LoadingScreen";
+import CMD from "./components/CMD";
+import Computer from "./components/Computer";
+import Explorer from "./components/Explorer";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isLoading, setIsLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handleOpenWindow = (type, path) => {
+    const icon = desktopIcons.find((icon) => icon.type === type);
+    if (icon) {
+      icon.initialPath = path;
+    }
+    if (!openWindows.includes(type)) {
+      setOpenWindows((prev) => [...prev, type]);
+    }
+    setMinimizedWindows((prev) => prev.filter((w) => w !== type));
+    setActiveWindow(type);
+  };
+
+  const desktopIcons = [
+    {
+      type: "computer",
+      icon: "/computer_explorer_cool-5.png",
+      label: "My Computer",
+      children: (
+        <Computer handleOpenWindow={handleOpenWindow} isMaximized={false} />
+      ),
+    },
+    {
+      type: "explorer",
+      icon: "/dir.png",
+      label: "Windows Explorer",
+      children: <Explorer />,
+    },
+    {
+      type: "about",
+      icon: "/user_world-1.png",
+      label: "About Me",
+      children: <HeroSection />,
+    },
+    {
+      type: "cmd",
+      icon: "/console_prompt-0.png",
+      label: "Command Prompt",
+      children: <CMD />,
+    },
+    {
+      type: "skills",
+      icon: "/skills.png",
+      label: "Skills",
+      children: <Skills />,
+    },
+    {
+      type: "projects",
+      icon: "/web_file_set-4.png",
+      label: "Projects",
+      children: <ProjectsPreview />,
+    },
+    {
+      type: "contact",
+      icon: "/contact.png",
+      label: "Contact",
+      children: <Contact />,
+    },
+    {
+      type: "browser",
+      icon: "/msie1-1.png",
+      label: "Internet Explorer",
+      children: <Browser />,
+    },
+    {
+      type: "github",
+      icon: "/github.svg",
+      label: "Github",
+      url: "http://github.com/omerorann",
+      isLink: true,
+    },
+    {
+      type: "linkedin",
+      icon: "/linkedin.svg",
+      label: "LinkedIn",
+      url: "http://linkedin.com/in/omeroran/",
+      isLink: true,
+    },
+  ];
+
+  const [openWindows, setOpenWindows] = useState(["about"]);
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [activeWindow, setActiveWindow] = useState("about");
+  const [minimizedWindows, setMinimizedWindows] = useState([]);
+
+  const handleIconClick = (type, e) => {
+    e.stopPropagation();
+    setSelectedIcon(type);
+  };
+
+  const handleIconDoubleClick = (type, e) => {
+    e.stopPropagation();
+    const icon = desktopIcons.find((icon) => icon.type === type);
+    if (icon.isLink && icon.url) {
+      window.open(icon.url, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    handleOpenWindow(type);
+  };
+
+  const handleCloseWindow = (type) => {
+    setOpenWindows((prev) => prev.filter((window) => window !== type));
+    setMinimizedWindows((prev) => prev.filter((w) => w !== type));
+    if (activeWindow === type) {
+      const remainingWindows = openWindows.filter((w) => w !== type);
+      setActiveWindow(remainingWindows[remainingWindows.length - 1] || null);
+    }
+  };
+
+  const handleMinimizeWindow = (type) => {
+    setMinimizedWindows((prev) => [...prev, type]);
+    setActiveWindow(null);
+  };
+
+  const handleWindowFocus = (type) => {
+    if (minimizedWindows.includes(type)) {
+      setMinimizedWindows((prev) => prev.filter((w) => w !== type));
+      setActiveWindow(type);
+    } else {
+      setActiveWindow(type);
+    }
+  };
+
+  const handleBackgroundClick = () => {
+    setSelectedIcon(null);
+  };
+
+  const openWindowsData = openWindows
+    .map((type) => {
+      const icon = desktopIcons.find((icon) => icon.type === type);
+      if (!icon) {
+        console.error("Icon not found for type:", type);
+        return null;
+      }
+      return {
+        id: icon.type,
+        icon: icon.icon,
+        title: icon.label,
+        isMinimized: minimizedWindows.includes(type),
+      };
+    })
+    .filter(Boolean);
+
+  const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0 });
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    setContextMenu({
+      show: true,
+      x: e.pageX,
+      y: e.pageY,
+    });
+  };
+
+  const contextMenuItems = [
+    {
+      label: "View",
+      icon: "/window.svg",
+      onClick: () => handleOpenWindow(selectedIcon),
+      disabled: !selectedIcon,
+    },
+    {
+      label: "Refresh",
+      icon: "/window.svg",
+      onClick: () => window.location.reload(),
+    },
+  ];
+
+  return (
+    <>
+      {isLoading ? (
+        <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
+      ) : (
+        <>
+          <div
+            className="relative h-screen overflow-hidden cursor-default select-none"
+            onClick={handleBackgroundClick}
+            onContextMenu={handleContextMenu}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            {/* Desktop Icons */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 p-2 w-fit">
+              {desktopIcons.map((icon) => (
+                <div
+                  key={icon.type}
+                  onClick={(e) => handleIconClick(icon.type, e)}
+                  className="w-24"
+                >
+                  <DesktopIcon
+                    icon={icon.icon}
+                    label={icon.label}
+                    isSelected={selectedIcon === icon.type}
+                    onDoubleClick={(e) => handleIconDoubleClick(icon.type, e)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {contextMenu.show && (
+              <ContextMenu
+                x={contextMenu.x}
+                y={contextMenu.y}
+                onClose={() => setContextMenu({ show: false, x: 0, y: 0 })}
+                menuItems={contextMenuItems}
+              />
+            )}
+
+            {/* Windows */}
+            {openWindows.map((type) => {
+              const window = desktopIcons.find((icon) => icon.type === type);
+              return (
+                <Window
+                  key={type}
+                  title={window.label}
+                  icon={window.icon}
+                  isActive={activeWindow === type}
+                  onClose={() => handleCloseWindow(type)}
+                  onFocus={() => handleWindowFocus(type)}
+                  onMinimize={() => handleMinimizeWindow(type)}
+                  showMaximize={!["about", "contact"].includes(type)}
+                  isMinimized={minimizedWindows.includes(type)}
+                  type={type}
+                  isFirstWindow={type === "about"}
+                  className="transform transition-transform"
+                >
+                  {type === "explorer" ? (
+                    <Explorer
+                      handleOpenWindow={handleOpenWindow}
+                      initialPath={window.initialPath || "C:\\"}
+                    />
+                  ) : (
+                    window.children
+                  )}
+                </Window>
+              );
+            })}
+          </div>
+
+          {/* TaskBar */}
+          <TaskBar
+            openWindows={openWindowsData}
+            activeWindow={activeWindow}
+            onWindowClick={handleOpenWindow}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </>
+      )}
+    </>
   );
 }

@@ -2,20 +2,155 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer components {
+  .win98-window {
+    @apply border border-win98-border-dark overflow-hidden;
+    background-color: #c0c0c0;
+    box-shadow: inset 1px 1px theme("colors.win98.border-light"),
+      inset -1px -1px theme("colors.win98.border-darker");
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .win98-window-content {
+    @apply relative flex flex-col p-4;
+    height: calc(100% - 28px); /* Title bar height */
+  }
+
+  .win98-title-bar {
+    @apply bg-win98-title-bar text-win98-title-text flex items-center justify-between select-none;
+    padding: 3px 2px 3px 3px;
+    height: 28px;
+  }
+
+  .win98-title-bar.inactive {
+    @apply bg-win98-border-darker text-win98-title-text;
+  }
+
+  .win98-title-bar img,
+  .win98-title-bar .icon {
+    @apply mr-1;
+    image-rendering: pixelated;
+  }
+
+  .win98-button {
+    @apply bg-win98-button border active:shadow-win98-in select-none;
+    min-width: 20px;
+    min-height: 20px;
+    border-width: 1px;
+    border-color: theme("colors.win98.border-light");
+    border-right-color: theme("colors.win98.border-darker");
+    border-bottom-color: theme("colors.win98.border-darker");
+    box-shadow: inset -1px -1px theme("colors.win98.border-dark"),
+      inset 1px 1px theme("colors.win98.border-light");
+  }
+
+  .win98-title-bar .win98-button {
+    @apply px-2 py-0.5 text-sm leading-none;
+    min-width: 20px;
+    min-height: 18px;
+    margin: 2px;
+  }
+
+  .win98-container {
+    @apply p-4 max-w-7xl mx-auto;
+  }
+
+  .win98-input {
+    @apply bg-white border-2 border-win98-border-darker px-2 py-1 shadow-win98-in;
+  }
+
+  .win98-card {
+    @apply bg-win98-bg p-4 shadow-win98-out;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-win98-bg text-win98-text overflow-hidden;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+::selection {
+  background: transparent;
+}
+
+/* Windows 98 Start Menu Animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.win98-start-menu {
+  animation: slideUp 0.2s ease-out;
+}
+
+/* Windows 98 Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  background: #dfdfdf;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px gray;
+}
+
+::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px gray;
+}
+
+::-webkit-scrollbar-button:vertical:start {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 4 L12 8 L4 8 Z" fill="black"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+::-webkit-scrollbar-button:vertical:end {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M4 8 L12 8 L8 12 Z" fill="black"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+::-webkit-scrollbar-button:horizontal:start {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M4 8 L8 4 L8 12 Z" fill="black"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+::-webkit-scrollbar-button:horizontal:end {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 4 L8 12 L12 8 Z" fill="black"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+::-webkit-scrollbar-corner {
+  background: #c0c0c0;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
