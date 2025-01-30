@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
-import { playSound, SOUNDS } from "../utils/sounds";
 
 export default function Window({
   title,
@@ -110,13 +109,11 @@ export default function Window({
   };
 
   const handleMinimizeClick = () => {
-    playSound(SOUNDS.CLICK);
     onMinimize?.();
   };
 
   const handleMaximize = () => {
     if (!mounted) return;
-    playSound(SOUNDS.CLICK);
     setIsMaximized(!isMaximized);
   };
 

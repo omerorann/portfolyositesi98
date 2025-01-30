@@ -2,13 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { playSound, SOUNDS } from "../utils/sounds";
 
 export default function ContextMenu({ x, y, onClose, menuItems }) {
   const menuRef = useRef(null);
 
   useEffect(() => {
-    playSound(SOUNDS.CLICK);
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         onClose();
@@ -32,7 +30,6 @@ export default function ContextMenu({ x, y, onClose, menuItems }) {
         <button
           key={index}
           onClick={() => {
-            playSound(SOUNDS.CLICK);
             item.onClick();
             onClose();
           }}

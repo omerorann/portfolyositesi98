@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { playSound, SOUNDS } from "../utils/sounds";
 
 export default function DesktopIcon({
   icon,
@@ -11,12 +10,10 @@ export default function DesktopIcon({
   onDoubleClick,
 }) {
   const handleClick = (e) => {
-    playSound(SOUNDS.CLICK);
     onClick?.(e);
   };
 
   const handleDoubleClick = (e) => {
-    playSound(SOUNDS.CLICK);
     onDoubleClick?.(e);
   };
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import MobileLayout from "./components/MobileLayout";
 import DesktopIcon from "./components/DesktopIcon";
 import Window from "./components/Window";
 import TaskBar from "./components/Taskbar";
@@ -17,6 +18,29 @@ import Explorer from "./components/Explorer";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [openWindows, setOpenWindows] = useState(["about"]);
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [activeWindow, setActiveWindow] = useState("about");
+  const [minimizedWindows, setMinimizedWindows] = useState([]);
+  const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0 });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
+  }
+
+  if (isMobile) {
+    return <MobileLayout />;
+  }
 
   const handleOpenWindow = (type, path) => {
     const icon = desktopIcons.find((icon) => icon.type === type);
@@ -97,11 +121,6 @@ export default function Home() {
     },
   ];
 
-  const [openWindows, setOpenWindows] = useState(["about"]);
-  const [selectedIcon, setSelectedIcon] = useState(null);
-  const [activeWindow, setActiveWindow] = useState("about");
-  const [minimizedWindows, setMinimizedWindows] = useState([]);
-
   const handleIconClick = (type, e) => {
     e.stopPropagation();
     setSelectedIcon(type);
@@ -160,8 +179,6 @@ export default function Home() {
       };
     })
     .filter(Boolean);
-
-  const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0 });
 
   const handleContextMenu = (e) => {
     e.preventDefault();

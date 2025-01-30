@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { playSound, SOUNDS } from "../utils/sounds";
 
 export default function CMD({ isMaximized }) {
   const [input, setInput] = useState("");
