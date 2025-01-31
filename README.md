@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio 98 - Windows 98 Temalı Portfolyo Web Sitesi
 
-## Getting Started
+Next.js ve React kullanılarak oluşturulmuş, nostaljik Windows 98 kullanıcı arayüzüne sahip modern bir portfolyo web sitesi
 
-First, run the development server:
+## Özellikler
+
+- 🖥️ Orijinal Windows 98 arayüz öğeleri ve etkileşimleri
+- 📱 Mobil uyumlu responsive tasarım
+- 🖱️ Sürüklenebilir pencerelerle interaktif masaüstü ortamı
+- 💻 Farklı bölümleri gösteren çoklu "uygulamalar":
+  - Hakkımda
+  - Yetenekler
+  - Projeler
+  - İletişim Formu
+  - Komut İstemi
+  - Internet Explorer
+  - Dosya Gezgini
+- 🎨 Retro tarzı bileşenler (pencereler, butonlar, ikonlar)
+- 📂 Dosya sistemi gezintisi
+- ⌨️ Fonksiyonel komut satırı arayüzü
+
+## Teknoloji Altyapısı
+
+- Next.js
+- React
+- Tailwind CSS
+- React Hook Form
+
+## Başlangıç
+
+### Gereksinimler
+
+- Node.js (v18 veya üzeri)
+- npm veya yarn
+
+### Kurulum
+
+1. Projeyi klonlayın:
+
+```bash
+git clone https://github.com/omerorann/portfolyositesi98.git
+```
+
+2. Proje dizinine gidin:
+
+```bash
+cd portfolyositesi98
+```
+
+3. Bağımlılıkları yükleyin:
+
+```bash
+npm install
+# veya
+yarn install
+```
+
+4. Geliştirme sunucusunu başlatın:
 
 ```bash
 npm run dev
-# or
+# veya
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Tarayıcınızı açın ve `http://localhost:3000` adresini ziyaret edin
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Kullanım
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Farklı bölümleri açmak için masaüstü ikonlarına tıklayın
+- Pencereleri yeniden konumlandırmak için sürükleyin
+- Pencereleri yönetmek için küçült, büyüt ve kapat butonlarını kullanın
+- Komut istemini `help`, `about`, `skills` gibi komutlarla deneyin
+- Dosya Gezgini ile dosya sisteminde gezinin
+- Internet Explorer ile harici linklere erişin
 
-## Learn More
+## Proje Yapısı
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── components/     # React bileşenleri
+├── data/          # Statik veriler ve konfigürasyonlar
+├── utils/         # Yardımcı fonksiyonlar
+└── public/        # Statik dosyalar (görseller, ikonlar)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## İletişim
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Ömer Oran - [LinkedIn](https://linkedin.com/in/omeroran) - [GitHub](https://github.com/omerorann)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+💾 ve nostalji ile yapılmıştır
