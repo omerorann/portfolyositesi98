@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import fileSystem from "../data/fileSystem";
 
 export default function TaskBar({
   openWindows = [],
@@ -12,28 +13,24 @@ export default function TaskBar({
   const [currentTime, setCurrentTime] = useState(new Date());
   const startMenuRef = useRef(null);
 
-  const desktopApps = [
-    { id: "about", title: "About Me", icon: "/user_world-1.png" },
-    { id: "skills", title: "Skills", icon: "/skills.png" },
-    { id: "projects", title: "Projects", icon: "/web_file_set-4.png" },
-    { id: "contact", title: "Contact", icon: "/contact.png" },
-  ];
+  const fileSystemData = fileSystem["C:\\"].children.Desktop.children;
 
-  const systemApps = [
-    { id: "browser", title: "Internet Explorer", icon: "/msie1-1.png" },
-    {
-      id: "github",
-      title: "GitHub",
-      icon: "/github.svg",
-      url: "https://github.com/omeroran",
-    },
-    {
-      id: "linkedin",
-      title: "LinkedIn",
-      icon: "/linkedin.svg",
-      url: "https://linkedin.com/in/omeroran",
-    },
-  ];
+  const desktopApps = Object.values(fileSystemData)
+    .filter((item) => item.type === "application" && item.appType !== "browser")
+    .map((app) => ({
+      id: app.appType,
+      title: app.name,
+      icon: app.icon,
+    }));
+
+  const systemApps = Object.values(fileSystemData)
+    .filter((item) => item.type === "link" || item.appType === "browser")
+    .map((app) => ({
+      id: app.type === "link" ? app.name.toLowerCase() : app.appType,
+      title: app.name,
+      icon: app.icon,
+      url: app.url,
+    }));
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -124,7 +121,6 @@ export default function TaskBar({
                   onClick={() => {
                     onWindowClick(app.id);
                     setIsStartMenuOpen(false);
-                    playSound(SOUNDS.CLICK);
                   }}
                   className={`w-full text-left px-4 py-1 flex items-center gap-3 hover:bg-[#000080] hover:text-white active:bg-[#000080] active:text-white focus:outline-none transition-colors duration-75 ${
                     activeWindow === app.id
@@ -150,7 +146,6 @@ export default function TaskBar({
                       onWindowClick(app.id);
                     }
                     setIsStartMenuOpen(false);
-                    playSound(SOUNDS.CLICK);
                   }}
                   className="w-full text-left px-4 py-1 flex items-center gap-3 hover:bg-[#000080] hover:text-white text-white"
                 >

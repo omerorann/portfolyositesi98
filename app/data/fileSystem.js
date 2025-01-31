@@ -1,7 +1,7 @@
 const fileSystem = {
   "C:\\": {
-    type: "directory",
-    name: "Local Disk (C:)",
+    type: "partition",
+    name: "Bu Bilgisayar",
     icon: "/computer_explorer_cool-5.png",
     totalSpace: "2.14 GB",
     freeSpace: "1.44 GB",
@@ -14,31 +14,31 @@ const fileSystem = {
         children: {
           "About Me": {
             type: "application",
-            name: "About Me",
+            name: "Hakkımda",
             icon: "/user_world-1.png",
             appType: "about",
           },
           Skills: {
             type: "application",
-            name: "Skills",
+            name: "Yetenekler",
             icon: "/skills.png",
             appType: "skills",
           },
           Projects: {
             type: "application",
-            name: "Projects",
+            name: "Projeler",
             icon: "/web_file_set-4.png",
             appType: "projects",
           },
           Contact: {
             type: "application",
-            name: "Contact",
+            name: "İletişim",
             icon: "/contact.png",
             appType: "contact",
           },
           "Command Prompt": {
             type: "application",
-            name: "Command Prompt",
+            name: "Komut Satırı",
             icon: "/console_prompt-0.png",
             appType: "cmd",
           },
@@ -52,7 +52,7 @@ const fileSystem = {
             type: "link",
             name: "GitHub",
             icon: "/github.svg",
-            url: "https://github.com/omeroran",
+            url: "https://github.com/omerorann",
           },
           LinkedIn: {
             type: "link",
@@ -140,7 +140,7 @@ const fileSystem = {
     },
   },
   "D:\\": {
-    type: "directory",
+    type: "partition",
     name: "CD-ROM Drive (D:)",
     icon: "/cd.png",
     status: "No Disc",
@@ -149,7 +149,7 @@ const fileSystem = {
 };
 
 export const systemInfo = {
-  os: "Microsoft Windows 98",
+  os: "Portfolio 98",
   version: "4.10.1998",
   manufacturer: "Microsoft Corporation",
   processor: "Intel Pentium II",

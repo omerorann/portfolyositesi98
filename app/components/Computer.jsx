@@ -28,11 +28,10 @@ export default function Computer({ isMaximized, handleOpenWindow }) {
 
   const handleFolderClick = (item) => {
     if (item.type === "directory") {
-      // Prevent navigation if directory is empty or if we're already in Local Disk C
       if (
         !item.children ||
         Object.keys(item.children).length === 0 ||
-        (currentPath === "C:\\" && item.name === "Local Disk (C:)")
+        (currentPath === "C:\\" && item.name === "Bu Bilgisayar")
       ) {
         return;
       }
@@ -64,7 +63,7 @@ export default function Computer({ isMaximized, handleOpenWindow }) {
             height={16}
             className="select-none"
           />
-          My Computer
+          Bu Bilgisayar
         </button>
       </div>
 

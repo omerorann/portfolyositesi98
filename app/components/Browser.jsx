@@ -11,25 +11,61 @@ export default function Browser({ isMaximized }) {
 
   const randomFacts = [
     {
-      title: "Did you know?",
-      content: "The first computer mouse was made of wood!",
+      title: "Biliyor muydunuz?",
+      content: "İlk bilgisayar faresi ahşaptan yapılmıştı!",
       image: "/windows-0.png",
     },
     {
-      title: "Fun Fact",
-      content: "Windows 98 was released on June 25, 1998.",
-      image: "/windows0.png",
+      title: "İlginç Bilgi",
+      content: "Windows 98, 25 Haziran 1998'de piyasaya sürüldü.",
+      image: "/windows-0.png",
     },
     {
-      title: "Tech History",
-      content: "The first version of Internet Explorer was released in 1995.",
+      title: "Teknoloji Tarihi",
+      content: "Internet Explorer'ın ilk sürümü 1995'te piyasaya sürüldü.",
       image: "/msie1-1.png",
     },
     {
-      title: "Interesting!",
+      title: "İlginç!",
       content:
-        "The term 'bug' in computer programming came from an actual moth found in a computer in 1947.",
+        "Bilgisayar programlamadaki 'bug' (hata) terimi, 1947'de bir bilgisayarda bulunan gerçek bir güveden gelmiştir.",
       image: "/world-3.png",
+    },
+    {
+      title: "Windows'un İlk Versiyonu",
+      content:
+        "Microsoft Windows'un ilk sürümü 20 Kasım 1985'te piyasaya sürüldü.",
+      image: "/windows-0.png",
+    },
+    {
+      title: "İlk Bilgisayar Virüsü",
+      content:
+        "Dünyanın ilk bilgisayar virüsü olan 'Creeper', 1971 yılında yazılmıştır.",
+      image: "/windows-0.png",
+    },
+    {
+      title: "İlk Sabit Disk",
+      content:
+        "IBM'in 1956 yılında ürettiği ilk sabit disk, sadece 5 MB kapasiteye sahipti.",
+      image: "/msie1-1.png",
+    },
+    {
+      title: "Mavi Ekran",
+      content:
+        "Windows'un ünlü 'Mavi Ekran' hatası, ilk kez Windows 3.1'de ortaya çıktı.",
+      image: "/world-3.png",
+    },
+    {
+      title: "İlk Web Tarayıcı",
+      content:
+        "İlk grafik tabanlı web tarayıcı olan Mosaic, 1993 yılında piyasaya sürüldü.",
+      image: "/msie1-1.png",
+    },
+    {
+      title: "İlk Dizüstü Bilgisayar",
+      content:
+        "Dünyanın ilk dizüstü bilgisayarı, 1981'de Osborne 1 adıyla piyasaya çıktı.",
+      image: "/windows-0.png",
     },
   ];
 
@@ -101,11 +137,6 @@ export default function Browser({ isMaximized }) {
           <div
             key={item}
             className="px-3 text-sm hover:bg-[#000080] hover:text-white focus:bg-[#000080] focus:text-white h-[22px] active:shadow-win98-in relative group cursor-pointer"
-            onClick={() => {
-              if (item === "Favorites") {
-                playSound(SOUNDS.CLICK);
-              }
-            }}
           >
             {item}
             {item === "Favorites" && (
@@ -113,12 +144,6 @@ export default function Browser({ isMaximized }) {
                 {favorites.map((favorite) => (
                   <div
                     key={favorite.name}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      playSound(SOUNDS.CLICK);
-                      setUrl(favorite.url);
-                      addToHistory(favorite.url);
-                    }}
                     className="w-full text-left px-2 py-1 hover:bg-[#000080] hover:text-white focus:bg-[#000080] focus:text-white cursor-pointer"
                   >
                     {favorite.name}
@@ -163,6 +188,7 @@ export default function Browser({ isMaximized }) {
           className="flex-grow flex items-center gap-2"
         >
           <input
+            disabled
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}

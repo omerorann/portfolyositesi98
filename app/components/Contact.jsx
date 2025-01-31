@@ -12,14 +12,25 @@ export default function Contact() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setStatus(null);
-    
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log(data);
-      setStatus('success');
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setStatus("success");
       reset();
     } catch (error) {
-      setStatus('error');
+      console.error("Error sending message:", error);
+      setStatus("error");
     } finally {
       setIsLoading(false);
     }
@@ -28,7 +39,8 @@ export default function Contact() {
   return (
     <div>
       <p className="text-sm mb-4">
-        Proje fikirlerinizi paylaşmak veya bir konuda yardım almak için benimle iletişime geçebilirsiniz.
+        Proje fikirlerinizi paylaşmak veya bir konuda yardım almak için benimle
+        iletişime geçebilirsiniz.
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -83,14 +95,22 @@ export default function Contact() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`win98-button px-4 py-1 ${isLoading ? 'opacity-50' : ''}`}
+            className={`win98-button px-4 py-1 ${
+              isLoading ? "opacity-50" : ""
+            }`}
           >
-            {isLoading ? 'Gönderiliyor...' : 'Gönder'}
+            {isLoading ? "Gönderiliyor..." : "Gönder"}
           </button>
 
           {status && (
-            <div className={`win98-button px-4 py-1 ${status === 'success' ? 'bg-win98-button' : 'shadow-win98-in'}`}>
-              {status === 'success' ? 'Mesajınız gönderildi!' : 'Bir hata oluştu.'}
+            <div
+              className={`win98-button px-4 py-1 ${
+                status === "success" ? "bg-win98-button" : "shadow-win98-in"
+              }`}
+            >
+              {status === "success"
+                ? "Mesajınız gönderildi!"
+                : "Bir hata oluştu."}
             </div>
           )}
         </div>

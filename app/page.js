@@ -15,6 +15,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import CMD from "./components/CMD";
 import Computer from "./components/Computer";
 import Explorer from "./components/Explorer";
+import fileSystem from "./data/fileSystem";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,11 +55,50 @@ export default function Home() {
     setActiveWindow(type);
   };
 
-  const desktopIcons = [
+  const desktopIcons = Object.entries(
+    fileSystem["C:\\"].children.Desktop.children
+  ).map(([key, item]) => {
+    const icon = {
+      type: item.appType || key.toLowerCase(),
+      icon: item.icon,
+      label: item.name,
+    };
+
+    if (item.type === "link") {
+      icon.url = item.url;
+      icon.isLink = true;
+    } else if (item.type === "application") {
+      switch (item.appType) {
+        case "about":
+          icon.children = <HeroSection handleOpenWindow={handleOpenWindow} />;
+          break;
+        case "skills":
+          icon.children = <Skills />;
+          break;
+        case "projects":
+          icon.children = <ProjectsPreview />;
+          break;
+        case "contact":
+          icon.children = <Contact />;
+          break;
+        case "cmd":
+          icon.children = <CMD />;
+          break;
+        case "browser":
+          icon.children = <Browser />;
+          break;
+      }
+    }
+
+    return icon;
+  });
+
+  // Add system icons
+  desktopIcons.unshift(
     {
       type: "computer",
-      icon: "/computer_explorer_cool-5.png",
-      label: "My Computer",
+      icon: fileSystem["C:\\"].icon,
+      label: fileSystem["C:\\"].name,
       children: (
         <Computer handleOpenWindow={handleOpenWindow} isMaximized={false} />
       ),
@@ -66,60 +106,10 @@ export default function Home() {
     {
       type: "explorer",
       icon: "/dir.png",
-      label: "Windows Explorer",
+      label: "Dosya Gezgini",
       children: <Explorer />,
-    },
-    {
-      type: "about",
-      icon: "/user_world-1.png",
-      label: "About Me",
-      children: <HeroSection />,
-    },
-    {
-      type: "cmd",
-      icon: "/console_prompt-0.png",
-      label: "Command Prompt",
-      children: <CMD />,
-    },
-    {
-      type: "skills",
-      icon: "/skills.png",
-      label: "Skills",
-      children: <Skills />,
-    },
-    {
-      type: "projects",
-      icon: "/web_file_set-4.png",
-      label: "Projects",
-      children: <ProjectsPreview />,
-    },
-    {
-      type: "contact",
-      icon: "/contact.png",
-      label: "Contact",
-      children: <Contact />,
-    },
-    {
-      type: "browser",
-      icon: "/msie1-1.png",
-      label: "Internet Explorer",
-      children: <Browser />,
-    },
-    {
-      type: "github",
-      icon: "/github.svg",
-      label: "Github",
-      url: "http://github.com/omerorann",
-      isLink: true,
-    },
-    {
-      type: "linkedin",
-      icon: "/linkedin.svg",
-      label: "LinkedIn",
-      url: "http://linkedin.com/in/omeroran/",
-      isLink: true,
-    },
-  ];
+    }
+  );
 
   const handleIconClick = (type, e) => {
     e.stopPropagation();

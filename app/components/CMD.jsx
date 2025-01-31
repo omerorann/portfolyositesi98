@@ -16,83 +16,87 @@ export default function CMD({ isMaximized }) {
 
     switch (cmd) {
       case "help":
-        output = `Available commands:
-help - Show this help message
-cls - Clear screen
-dir - List directory contents
-ver - Show Windows version
-date - Show current date
-time - Show current time
-echo - Display a message
+        output = `-----------------------------------------------------------------------
+  Kullanılabilir komutlar:
 
-Portfolio commands:
-about - View about me section
-skills - List my technical skills
-projects - View my projects
-contact - Show contact information
-github - Open GitHub profile
-linkedin - Open LinkedIn profile`;
+help - Komutlar hakkında yardım
+cls - Ekranı temizle
+dir - Dizin içeriğini listele
+ver - OS sürümünü göster
+date - Güncel tarihi göster
+time - Güncel saati göster
+echo - Mesaj görüntüle
+-----------------------------------------------------------------------
+  Portfolyo komutları:
+
+about - Hakkımda bölümünü görüntüle
+skills - Teknik yeteneklerimi listele
+projects - Projelerimi görüntüle
+contact - İletişim bilgilerini göster
+github - GitHub profilini aç
+linkedin - LinkedIn profilini aç
+-----------------------------------------------------------------------`;
+        break;
+      case "about":
+        output =
+          "Merhaba, Ben Ömer Oran - Frontend Developer\n\nModern web teknolojileri ile kullanıcı dostu arayüzler geliştiriyorum. React, Next.js ve Tailwind CSS konularında çalışıyorum.";
+        break;
+      case "skills":
+        output =
+          "Teknik Yetenekler:\n\n- Frontend: React, Next.js, Tailwind CSS\n- Backend: Node.js\n- Veritabanı: Postges, MSSQL, Firebase\n- Araçlar: Git, Github, Figma\n- Diğer: RESTful APIs, Responsive Design";
+        break;
+      case "projects":
+        output =
+          "Öne Çıkan Projeler:\n\n1. Portfolio 98 - Windows 98 temalı portfolyo websitesi\n2. Diğer projelerimi görmek için 'github' komutunu kullanabilirsiniz.";
+        break;
+      case "contact":
+        output =
+          "İletişim Bilgileri:\n\nGitHub: github.com/omerorann\nLinkedIn: linkedin.com/in/omeroran\n\nProje fikirlerinizi paylaşmak veya bir konuda yardım almak için benimle iletişime geçebilirsiniz.";
         break;
       case "cls":
         setHistory([]);
         return;
       case "dir":
-        output = `Volume in drive C is PORTFOLIO98
-Volume Serial Number is 1337-1998
+        output = `C: sürücüsündeki birim PORTFOLIO98
+Birim Seri Numarası: 1337-1998
 
-Directory of C:\Desktop
+C:\Desktop dizini
 
-05/11/1998  03:14 PM    <DIR>          .
-05/11/1998  03:14 PM    <DIR>          ..
-05/11/1998  03:14 PM             <DIR> About Me
-05/11/1998  03:14 PM             <DIR> Skills
-05/11/1998  03:14 PM             <DIR> Projects
-05/11/1998  03:14 PM             <DIR> Contact
-05/11/1998  03:14 PM             <DIR> Command Prompt
-05/11/1998  03:14 PM             <DIR> Internet Explorer
-05/11/1998  03:14 PM             <DIR> GitHub
-05/11/1998  03:14 PM             <DIR> LinkedIn
-               0 File(s)              0 bytes
-              10 Dir(s)   2,147,483,648 bytes free`;
+05/11/1998  15:14    <DIR>          .
+05/11/1998  15:14    <DIR>          ..
+05/11/1998  15:14    <DIR>          Hakkımda
+05/11/1998  15:14    <DIR>          Yetenekler
+05/11/1998  15:14    <DIR>          Projeler
+05/11/1998  15:14    <DIR>          İletişim
+05/11/1998  15:14    <DIR>          Komut Satırı
+05/11/1998  15:14    <DIR>          Internet Explorer
+05/11/1998  15:14    <DIR>          GitHub
+05/11/1998  15:14    <DIR>          LinkedIn
+               0 Dosya              0 bayt
+              10 Dir   2,147,483,648 bayt boş`;
         break;
       case "ver":
-        output = "Portfolio Windows [Version 4.10.1998]";
+        output = "Portfolio 98 [Sürüm 4.10.1998]";
         break;
       case "date":
-        output = new Date().toLocaleDateString();
+        output = new Date().toLocaleDateString("tr-TR");
         break;
       case "time":
-        output = new Date().toLocaleTimeString();
-        break;
-      case "about":
-        output =
-          "Omer Oran - Full Stack Developer\n\nPassionate about creating innovative web solutions and exploring new technologies. Experienced in modern web development with a focus on user experience and performance.";
-        break;
-      case "skills":
-        output =
-          "Technical Skills:\n\n- Frontend: React, Next.js, Vue.js, JavaScript/TypeScript\n- Backend: Node.js, Python, Java\n- Database: MongoDB, PostgreSQL, MySQL\n- Tools: Git, Docker, AWS\n- Other: RESTful APIs, GraphQL, CI/CD";
-        break;
-      case "projects":
-        output =
-          "Notable Projects:\n\n1. Windows 98 Portfolio - A nostalgic portfolio website\n2. E-commerce Platform - Full-stack online shopping solution\n3. Task Management System - Team collaboration tool\n\nType 'github' to view more projects.";
-        break;
-      case "contact":
-        output =
-          "Contact Information:\n\nEmail: contact@example.com\nLinkedIn: linkedin.com/in/omeroran\nGitHub: github.com/omerorann";
+        output = new Date().toLocaleTimeString("tr-TR");
         break;
       case "github":
         window.open("https://github.com/omeroran", "_blank");
-        output = "Opening GitHub profile...";
+        output = "GitHub profili açılıyor...";
         break;
       case "linkedin":
         window.open("https://linkedin.com/in/omeroran", "_blank");
-        output = "Opening LinkedIn profile...";
+        output = "LinkedIn profili açılıyor...";
         break;
       default:
         if (cmd.startsWith("echo ")) {
           output = cmd.substring(5);
         } else if (cmd !== "") {
-          output = `'${cmd}' is not recognized as an internal or external command,\noperable program or batch file.`;
+          output = `'${cmd}' dahili veya harici bir komut olarak tanınmıyor,\nçalıştırılabilir program veya toplu iş dosyası değil.`;
         }
     }
 
@@ -110,7 +114,7 @@ Directory of C:\Desktop
     setHistory([
       {
         type: "output",
-        text: "Microsoft Windows [Version 4.10.1998]\nCopyright © Microsoft Corp 1981-1998\n\nC:Desktop>",
+        text: "Portfolio 98 [Sürüm 4.10.1998]\nTelif Hakkı © Microsoft Corp 1981-1998\n",
       },
     ]);
   }, []);
@@ -140,7 +144,6 @@ Directory of C:\Desktop
 
   useEffect(() => {
     inputRef.current?.focus();
-    // Auto-scroll to bottom when history changes
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
@@ -163,7 +166,7 @@ Directory of C:\Desktop
           <div key={index} className="whitespace-pre-wrap">
             {item.type === "input" ? (
               <div>
-                <span>C:\Desktop{">"}"</span>
+                <span>C:\Desktop{">"}</span>
                 {item.text}
               </div>
             ) : (
@@ -173,7 +176,7 @@ Directory of C:\Desktop
         ))}
       </div>
       <div className="flex mt-2">
-        <span>C:\Desktop{">"}"</span>
+        <span>C:\Desktop{">"}</span>
         <input
           ref={inputRef}
           type="text"

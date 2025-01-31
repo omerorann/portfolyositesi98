@@ -64,12 +64,40 @@
 }
 
 body {
-  @apply bg-win98-bg text-win98-text overflow-hidden;
+  @apply bg-win98-bg text-win98-text;
   cursor: default;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #dfdfdf;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #c0c0c0;
+  }
 }
 
 ::selection {

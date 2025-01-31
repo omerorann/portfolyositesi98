@@ -5,16 +5,16 @@ import Image from "next/image";
 
 export default function LoadingScreen({ onLoadingComplete }) {
   const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState("Initializing...");
+  const [status, setStatus] = useState("Başlatılıyor...");
 
   useEffect(() => {
     const statuses = [
-      "Checking system configuration...",
-      "Loading Windows 98...",
-      "Preparing desktop environment...",
-      "Starting Windows Explorer...",
-      "Loading user profile...",
-      "Almost ready...",
+      "Sistem yapılandırması kontrol ediliyor…",
+      "Portfolio 98 yükleniyor…",
+      "Masaüstü ortamı hazırlanıyor...",
+      "Dosya Gezgini başlatılıyor...",
+      "Kullanıcı profili yükleniyor...",
+      "Neredeyse hazır..."
     ];
 
     let currentStatus = 0;
@@ -56,7 +56,7 @@ export default function LoadingScreen({ onLoadingComplete }) {
             height={32}
             className="animate-bounce"
           />
-          <h1 className="text-xl">Windows 98</h1>
+          <h1 className="text-xl">Portfolio 98</h1>
         </div>
 
         <div className="mb-4">
