@@ -37,15 +37,6 @@ export default function MobileLayout() {
         ) : null,
     }));
 
-  const socialLinks = Object.values(fileSystemData)
-    .filter((item) => item.type === "link")
-    .map((link) => ({
-      id: link.name.toLowerCase(),
-      title: link.name,
-      icon: link.icon,
-      url: link.url,
-    }));
-
   return (
     <div className="min-h-screen bg-[#008080] flex flex-col">
       {/* Header */}
@@ -61,22 +52,6 @@ export default function MobileLayout() {
           </div>
           <span className="text-[#000080]">Portfolio 98</span>
         </h1>
-        <div className="flex gap-2">
-          {socialLinks.map((link) => (
-            <a
-              key={link.id}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="win98-button py-1 px-2 flex items-center gap-2 shadow-win98-out hover:shadow-win98-out-lg active:shadow-win98-in transition-shadow duration-100"
-            >
-              <div className="relative w-4 h-4 flex-shrink-0">
-                <Image src={link.icon} alt="" fill className="object-contain" />
-              </div>
-              <span className="font-bold text-sm">{link.title}</span>
-            </a>
-          ))}
-        </div>
       </div>
 
       {/* Content */}
