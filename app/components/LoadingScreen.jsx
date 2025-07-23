@@ -8,42 +8,33 @@ export default function LoadingScreen({ onLoadingComplete }) {
   const [status, setStatus] = useState("Başlatılıyor...");
 
   useEffect(() => {
-    const statuses = [
-      "Sistem yapılandırması kontrol ediliyor…",
-      "Portfolio 98 yükleniyor…",
-      "Masaüstü ortamı hazırlanıyor...",
-      "Dosya Gezgini başlatılıyor...",
-      "Kullanıcı profili yükleniyor...",
-      "Neredeyse hazır..."
-    ];
-
-    let currentStatus = 0;
-    const statusInterval = setInterval(() => {
-      if (currentStatus < statuses.length) {
-        setStatus(statuses[currentStatus]);
-        currentStatus++;
-      }
-    }, 1500);
-
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          clearInterval(statusInterval);
-          setTimeout(() => {
-            onLoadingComplete();
-          }, 1000);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 10) + 1;
+        const next = Math.min(prev + Math.floor(Math.random() * 10) + 5, 100);
+        return next;
       });
-    }, 400);
+    }, 200); // Daha sık ve hızlı güncelleme
 
     return () => {
       clearInterval(progressInterval);
-      clearInterval(statusInterval);
     };
-  }, [onLoadingComplete]);
+  }, []);
+
+  useEffect(() => {
+    // Progress'e göre status belirleme
+    if (progress < 10) setStatus("Sistem yapılandırması kontrol ediliyor…");
+    else if (progress < 30) setStatus("Portfolio 98 yükleniyor…");
+    else if (progress < 50) setStatus("Masaüstü ortamı hazırlanıyor...");
+    else if (progress < 70) setStatus("Dosya Gezgini başlatılıyor...");
+    else if (progress < 90) setStatus("Kullanıcı profili yükleniyor...");
+    else if (progress < 100) setStatus("Neredeyse hazır...");
+    else {
+      setStatus("Tamamlandı!");
+      setTimeout(() => {
+        onLoadingComplete();
+      }, 300); // Daha kısa bekleme süresi
+    }
+  }, [progress, onLoadingComplete]);
 
   return (
     <div className="fixed inset-0 bg-[#008080] flex flex-col items-center justify-center text-white z-[9999]">
@@ -62,7 +53,7 @@ export default function LoadingScreen({ onLoadingComplete }) {
         <div className="mb-4">
           <div className="win98-window bg-white p-1 h-5 relative overflow-hidden">
             <div
-              className="absolute inset-y-0 left-0 bg-[#000080] transition-all duration-300"
+              className="absolute inset-y-0 left-0 bg-[#000080] transition-all duration-200"
               style={{ width: `${progress}%` }}
             />
           </div>

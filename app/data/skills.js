@@ -17,6 +17,12 @@ export const skills = [
     category: "Frontend"
   },
   { 
+    name: "React Native", 
+    icon: FaReact,
+    color: "#61DAFB",
+    category: "Frontend"
+  },
+  { 
     name: "Next.js", 
     icon: SiNextdotjs,
     color: "#000000",
