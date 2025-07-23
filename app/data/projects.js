@@ -77,8 +77,7 @@ export const projects = [
       "HTML5 Canvas",
       "Vercel"
     ],
-    url: "https://evercraft-solutions.vercel.app", // Deploy URL'inizi buraya ekleyin
-    github: "https://github.com/omerorann/evercraft", // GitHub repo URL'i
+    url: "https://evercraftsolutions.vercel.app", // Deploy URL'inizi buraya ekleyin
     featured: true,
     stats: {
       views: 950,
